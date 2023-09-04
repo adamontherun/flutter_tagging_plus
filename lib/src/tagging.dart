@@ -16,6 +16,10 @@ class FlutterTagging<T extends Taggable> extends StatefulWidget {
   ///  i.e. when items are selected or removed.
   final VoidCallback? onChanged;
 
+  /// Called every time the value is removed.
+  ///  returns the removed item.
+  final ValueChanged<T>? onRemoved;
+
   /// The configuration of the [TextField] that the [FlutterTagging] widget displays.
   final TextFieldConfiguration textFieldConfiguration;
 
@@ -155,6 +159,7 @@ class FlutterTagging<T extends Taggable> extends StatefulWidget {
     this.animationDuration = const Duration(milliseconds: 500),
     this.animationStart = 0.25,
     this.onAdded,
+    this.onRemoved,
   });
 
   @override
@@ -313,6 +318,7 @@ class _FlutterTaggingState<T extends Taggable>
                 widget.initialItems.remove(item);
                 setState(() {});
                 widget.onChanged?.call();
+                widget.onRemoved?.call(item);
               },
             );
           }).toList(),
