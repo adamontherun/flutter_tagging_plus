@@ -53,7 +53,7 @@ class FlutterTagging<T extends Taggable> extends StatefulWidget {
   /// Defines an object for search pattern.
   ///
   /// If null, tag addition feature is disabled.
-  final FutureOr<T> Function(String)? additionCallback;
+  final T Function(String)? additionCallback;
 
   /// Called when add to tag button is pressed.
   ///
@@ -234,7 +234,7 @@ class _FlutterTaggingState<T extends Taggable>
             final suggestions = await widget.findSuggestions(query);
             suggestions.removeWhere(widget.initialItems.contains);
             if (widget.additionCallback != null && query.isNotEmpty) {
-              final additionItem = await widget.additionCallback!(query);
+              final additionItem = widget.additionCallback!(query);
               if (!suggestions.contains(additionItem) &&
                   !widget.initialItems.contains(additionItem)) {
                 _additionItem = additionItem;
